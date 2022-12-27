@@ -38,9 +38,15 @@ const Auth = () => {
         if (provider === "Github")
             return await supabase.auth.signInWithOAuth({
                 provider: "github",
+                options: {
+                    redirectTo: process.env.PRODUCTION_URL || "http://localhost:3000",
+                },
             })
         return await supabase.auth.signInWithOAuth({
             provider: "google",
+            options: {
+                redirectTo: process.env.PRODUCTION_URL || "http://localhost:3000",
+            },
         })
     }
 
