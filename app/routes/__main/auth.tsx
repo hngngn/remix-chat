@@ -1,5 +1,5 @@
-import { LoaderArgs, redirect } from "@remix-run/node"
-import { useOutletContext } from "@remix-run/react"
+import { json, LoaderArgs, redirect } from "@remix-run/node"
+import { useLoaderData, useOutletContext } from "@remix-run/react"
 import { createServerClient } from "~/utils"
 import { TypedSupabaseClient } from "../__main"
 
@@ -10,6 +10,9 @@ type ProviderList = {
 }
 
 export const loader = async ({ request }: LoaderArgs) => {
+    const env = {
+        PRODUCTION_URL: process.env.PRODUCTION_URL,
+    }
     const response = new Response()
     const supabase = createServerClient({ request, response })
     const {
@@ -17,10 +20,11 @@ export const loader = async ({ request }: LoaderArgs) => {
     } = await supabase.auth.getSession()
     if (session !== null) return redirect("/")
 
-    return null
+    return json({ env })
 }
 
 const Auth = () => {
+    const { env } = useLoaderData<typeof loader>()
     const providerList: ProviderList[] = [
         {
             provider: "Github",
@@ -39,13 +43,13 @@ const Auth = () => {
             return await supabase.auth.signInWithOAuth({
                 provider: "github",
                 options: {
-                    redirectTo: process.env.PRODUCTION_URL || "http://localhost:3000",
+                    redirectTo: env.PRODUCTION_URL || "http://localhost:3000",
                 },
             })
         return await supabase.auth.signInWithOAuth({
             provider: "google",
             options: {
-                redirectTo: process.env.PRODUCTION_URL || "http://localhost:3000",
+                redirectTo: env.PRODUCTION_URL || "http://localhost:3000",
             },
         })
     }
