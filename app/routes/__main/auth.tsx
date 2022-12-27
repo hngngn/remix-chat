@@ -1,6 +1,6 @@
 import { LoaderArgs, redirect } from "@remix-run/node"
 import { useOutletContext } from "@remix-run/react"
-import { createServerClient } from "~/utils"
+import { createServerClient } from "@supabase/auth-helpers-remix"
 import { TypedSupabaseClient } from "../__main"
 
 type ProviderList = {
@@ -11,7 +11,10 @@ type ProviderList = {
 
 export const loader = async ({ request }: LoaderArgs) => {
     const response = new Response()
-    const supabase = createServerClient({ request, response })
+    const supabase = createServerClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!, {
+        request,
+        response,
+    })
     const {
         data: { session },
     } = await supabase.auth.getSession()

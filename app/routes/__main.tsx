@@ -1,9 +1,13 @@
 import { json, LoaderArgs } from "@remix-run/node"
 import { Outlet, useFetcher, useLoaderData, useNavigate } from "@remix-run/react"
-import { createBrowserClient, Session, SupabaseClient } from "@supabase/auth-helpers-remix"
+import {
+    createBrowserClient,
+    createServerClient,
+    Session,
+    SupabaseClient,
+} from "@supabase/auth-helpers-remix"
 import { useEffect, useState } from "react"
 import { Database } from "~/types/supabase"
-import { createServerClient } from "~/utils"
 
 export type TypedSupabaseClient = SupabaseClient<Database>
 export type MaybeSession = Session | null
@@ -19,7 +23,10 @@ export const loader = async ({ request }: LoaderArgs) => {
         SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!,
     }
     const response = new Response()
-    const supabase = createServerClient({ request, response })
+    const supabase = createServerClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!, {
+        request,
+        response,
+    })
     const {
         data: { session },
     } = await supabase.auth.getSession()
