@@ -1,7 +1,8 @@
-import { json, LoaderArgs, redirect } from "@remix-run/node"
+import type { LoaderArgs } from "@remix-run/node"
+import { json, redirect } from "@remix-run/node"
 import { useLoaderData, useOutletContext } from "@remix-run/react"
 import { createServerClient } from "~/utils"
-import { TypedSupabaseClient } from "../__main"
+import type { TypedSupabaseClient } from "../__main"
 
 type ProviderList = {
     title: string
@@ -69,7 +70,13 @@ const Auth = () => {
                                     : "border-2 border-slate-900"
                             }`}>
                             <span>
-                                <img src={data.url} alt={data.provider} width={24} height={24} />
+                                <img
+                                    src={data.url}
+                                    alt={data.provider}
+                                    width={24}
+                                    height={24}
+                                    loading="eager"
+                                />
                             </span>
                             <span>{data.title}</span>
                         </button>

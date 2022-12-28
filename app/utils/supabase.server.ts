@@ -1,5 +1,5 @@
 import { createServerClient as _createServerClient } from "@supabase/auth-helpers-remix"
-import { Database } from "~/types/supabase"
+import type { Database } from "~/types/supabase"
 
 export const createServerClient = ({
     request,
