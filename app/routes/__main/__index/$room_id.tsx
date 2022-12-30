@@ -81,7 +81,7 @@ const Room = () => {
     return (
         <div className="relative h-full">
             <RoomHeader data={roomFriendProfile[0]?.profiles} />
-            <main className="flex flex-col px-4 h-[calc(100vh-72px*2-12px)] pb-2">
+            <main className="flex flex-col px-4 h-[calc(100%-72px*2-12px)] pb-2">
                 <div className="flex flex-col-reverse h-full scrollbar scrollbar-rounded scroll-smooth pr-2">
                     <div className="flex flex-col gap-2">
                         {messages?.map((data) => (

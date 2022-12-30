@@ -2,6 +2,7 @@ import type { LoaderArgs } from "@remix-run/node"
 import { json, redirect } from "@remix-run/node"
 import { Outlet, useLoaderData, useLocation, useNavigate, useOutletContext } from "@remix-run/react"
 import { Sidebar } from "~/components"
+import { useFullViewMobile } from "~/hooks"
 import type { SupabaseContext } from "~/routes/__main"
 import type { Room_participants } from "~/types/database"
 import { createServerClient } from "~/utils"
@@ -32,9 +33,14 @@ const Home = () => {
         navigate("/auth", { replace: true })
     }
     const location = useLocation()
+    const height = useFullViewMobile()
 
     return (
-        <div className="flex h-screen">
+        <div
+            className="flex"
+            style={{
+                height: height ? `${height}px` : "100vh",
+            }}>
             <div className={`${location.pathname === "/" ? "block" : "hidden md:block"}`}>
                 <Sidebar
                     user={session?.user}
