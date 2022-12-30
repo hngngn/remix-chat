@@ -5,6 +5,10 @@ const measureHeight = (): number | null => {
     return window.innerHeight
 }
 
+const isClient = () => {
+    return typeof window !== "undefined" && typeof document !== "undefined"
+}
+
 const useWasRenderedOnClientAtLeastOnce = () => {
     const [wasRenderedOnClientAtLeastOnce, setWasRenderedOnClientAtLeastOnce] = useState(false)
 
@@ -14,10 +18,6 @@ const useWasRenderedOnClientAtLeastOnce = () => {
         }
     }, [])
     return wasRenderedOnClientAtLeastOnce
-}
-
-const isClient = () => {
-    return typeof window !== "undefined" && typeof document !== "undefined"
 }
 
 export const useFullViewMobile = (): number | null => {

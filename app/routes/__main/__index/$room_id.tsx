@@ -118,7 +118,7 @@ const Room = () => {
                             height={18}
                             width={18}
                             loading="lazy"
-                            placeholder="blur"
+                            loading="eager"
                         />
                     </button>
                 </div>

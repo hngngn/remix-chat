@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react"
 import type { User } from "@supabase/supabase-js"
-import { Image } from "remix-image"
+import { Image, MimeType } from "remix-image"
 import { SidebarUserInfo } from "./user-info"
 
 type Props = {
@@ -18,13 +18,27 @@ export const SidebarLeft = (props: Props) => {
                 <Link
                     to="/"
                     className="btn-icon transition duration-200 ease-out hover:bg-blue-50 w-full !h-[2.8rem]">
-                    <Image src="/home-line.svg" alt="Home" loading="eager" width={22} height={22} />
+                    <Image
+                        src="/home-line.svg"
+                        alt="Home"
+                        loading="eager"
+                        loaderUrl="/api/image"
+                        options={{
+                            contentType: MimeType.WEBP,
+                        }}
+                        width={22}
+                        height={22}
+                    />
                 </Link>
                 <button className="btn-icon bg-blue-50 w-full !h-[2.8rem]">
                     <Image
                         src="/message-circle.svg"
                         alt="Message"
                         loading="eager"
+                        loaderUrl="/api/image"
+                        options={{
+                            contentType: MimeType.WEBP,
+                        }}
                         width={22}
                         height={22}
                     />

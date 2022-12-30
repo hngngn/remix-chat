@@ -1,4 +1,4 @@
-import { Image } from "remix-image"
+import { Image, MimeType } from "remix-image"
 import type { Profiles } from "~/types/database"
 
 type Props = {
@@ -16,10 +16,13 @@ export const SearchUserList = (props: Props) => {
             <Image
                 src={data.avatar}
                 alt={data.username}
-                loading="lazy"
-                placeholder="blur"
                 width={36}
                 height={36}
+                loading="eager"
+                loaderUrl="/api/image"
+                options={{
+                    contentType: MimeType.WEBP,
+                }}
                 className="rounded-full"
             />
             <span className="text-sm overflow-hidden whitespace-nowrap text-ellipsis">

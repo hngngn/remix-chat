@@ -1,7 +1,7 @@
 import { Menu, Transition } from "@headlessui/react"
 import type { User } from "@supabase/supabase-js"
 import { Fragment } from "react"
-import { Image } from "remix-image"
+import { Image, MimeType } from "remix-image"
 
 type Props = {
     user: User | undefined
@@ -19,6 +19,11 @@ export const SidebarUserInfo = (props: Props) => {
                     alt={user?.user_metadata.full_name}
                     width={43}
                     height={43}
+                    loading="eager"
+                    loaderUrl="/api/image"
+                    options={{
+                        contentType: MimeType.WEBP,
+                    }}
                     className="rounded-full"
                 />
             </Menu.Button>
@@ -43,8 +48,11 @@ export const SidebarUserInfo = (props: Props) => {
                                     <Image
                                         src="/image-user.svg"
                                         alt="Profile"
-                                        loading="lazy"
-                                        placeholder="blur"
+                                        loading="eager"
+                                        loaderUrl="/api/image"
+                                        options={{
+                                            contentType: MimeType.WEBP,
+                                        }}
                                         width={18}
                                         height={18}
                                     />
@@ -60,8 +68,11 @@ export const SidebarUserInfo = (props: Props) => {
                                     <Image
                                         src="/log-out-02.svg"
                                         alt="Profile"
-                                        loading="lazy"
-                                        placeholder="blur"
+                                        loading="eager"
+                                        loaderUrl="/api/image"
+                                        options={{
+                                            contentType: MimeType.WEBP,
+                                        }}
                                         width={18}
                                         height={18}
                                     />

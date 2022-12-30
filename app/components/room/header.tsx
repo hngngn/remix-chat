@@ -1,5 +1,5 @@
 import { useNavigate } from "@remix-run/react"
-import { Image } from "remix-image"
+import { Image, MimeType } from "remix-image"
 import type { Profiles } from "~/types/database"
 
 type Props = {
@@ -17,7 +17,15 @@ export const RoomHeader = (props: Props) => {
                     <button
                         className="p-2 bg-blue-50 rounded-xl block md:hidden"
                         onClick={() => navigate("/", { replace: true })}>
-                        <Image src="/chevron-left.svg" alt="Back to home" width={18} height={18} />
+                        <Image
+                            src="/chevron-left.svg"
+                            alt="Back to home"
+                            loading="eager"
+                            loaderUrl="/api/image"
+                            options={{
+                                contentType: MimeType.WEBP,
+                            }}
+                        />
                     </button>
                     <div className="flex justify-center items-center gap-3">
                         <Image
@@ -25,8 +33,11 @@ export const RoomHeader = (props: Props) => {
                             alt={data?.username}
                             height={40}
                             width={40}
-                            loading="lazy"
-                            placeholder="blur"
+                            loading="eager"
+                            loaderUrl="/api/image"
+                            options={{
+                                contentType: MimeType.WEBP,
+                            }}
                             className="rounded-full"
                         />
                         <span>{data?.username}</span>

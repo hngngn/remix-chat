@@ -1,7 +1,7 @@
-import { useFetcher, useLocation, useNavigate, useOutletContext } from "@remix-run/react"
+import { useLocation, useNavigate, useOutletContext } from "@remix-run/react"
 import { useAtomValue } from "jotai"
 import { useEffect, useState } from "react"
-import { Image } from "remix-image"
+import { Image, MimeType } from "remix-image"
 import type { SupabaseContext } from "~/routes/__main"
 import { useLastMessage } from "~/stores"
 import type { Room_participants } from "~/types/database"
@@ -30,7 +30,6 @@ export const SidebarMessage = (props: Props) => {
     useEffect(() => {
         fetch()
     }, [])
-    const fetcher = useFetcher()
     const navigate = useNavigate()
 
     return (
@@ -42,10 +41,13 @@ export const SidebarMessage = (props: Props) => {
             <Image
                 src={data.profiles?.avatar}
                 alt={data.profiles?.username}
-                loading="lazy"
-                placeholder="blur"
                 width={43}
                 height={43}
+                loading="eager"
+                loaderUrl="/api/image"
+                options={{
+                    contentType: MimeType.WEBP,
+                }}
                 className="rounded-full"
             />
             <div className="flex flex-col gap-1 overflow-hidden">

@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react"
 import type { User } from "@supabase/supabase-js"
 import { Fragment } from "react"
-import { Image } from "remix-image"
+import { Image, MimeType } from "remix-image"
 
 type Props = {
     isOpen: boolean
@@ -49,10 +49,13 @@ export const UserInfoModal = (props: Props) => {
                                         <Image
                                             src="/x-close.svg"
                                             alt="Close"
-                                            loading="lazy"
-                                            placeholder="blur"
                                             width={20}
                                             height={20}
+                                            loading="eager"
+                                            loaderUrl="/api/image"
+                                            options={{
+                                                contentType: MimeType.WEBP,
+                                            }}
                                         />
                                     </button>
                                 </div>
@@ -62,8 +65,11 @@ export const UserInfoModal = (props: Props) => {
                                         alt={user?.user_metadata.full_name}
                                         width={90}
                                         height={90}
-                                        loading="lazy"
-                                        placeholder="blur"
+                                        loading="eager"
+                                        loaderUrl="/api/image"
+                                        options={{
+                                            contentType: MimeType.WEBP,
+                                        }}
                                         className="rounded-full"
                                     />
                                     <table>

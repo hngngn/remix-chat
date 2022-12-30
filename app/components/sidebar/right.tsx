@@ -1,7 +1,7 @@
 import { useFetcher, useNavigate, useOutletContext } from "@remix-run/react"
 import type { RefObject } from "react"
 import { useEffect, useState } from "react"
-import { Image } from "remix-image"
+import { Image, MimeType } from "remix-image"
 import { useDebounce } from "~/hooks"
 import type { TypedSupabaseClient } from "~/routes/__main"
 import type { Profiles, Room_participants } from "~/types/database"
@@ -59,6 +59,10 @@ export const SidebarRight = (props: Props) => {
                             src="/search-lg.svg"
                             alt="Search"
                             loading="eager"
+                            loaderUrl="/api/image"
+                            options={{
+                                contentType: MimeType.WEBP,
+                            }}
                             width={18}
                             height={18}
                             className="absolute top-0 bottom-0 my-auto ml-3"
