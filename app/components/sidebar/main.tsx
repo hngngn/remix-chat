@@ -6,7 +6,7 @@ import { SidebarLeft } from "./left"
 import { SidebarRight } from "./right"
 
 type Props = {
-    user: User
+    user: User | undefined
     handleSignOut: () => void
     room_participants: Room_participants[]
 }

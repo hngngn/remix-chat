@@ -1,9 +1,10 @@
 import { Menu, Transition } from "@headlessui/react"
 import type { User } from "@supabase/supabase-js"
 import { Fragment } from "react"
+import { Image } from "remix-image"
 
 type Props = {
-    user: User
+    user: User | undefined
     setIsOpen: (arg: boolean) => void
     handleSignOut: () => void
 }
@@ -13,11 +14,11 @@ export const SidebarUserInfo = (props: Props) => {
     return (
         <Menu as="div" className="relative">
             <Menu.Button className="focus:outline-none">
-                <img
+                <Image
                     src={user?.user_metadata.avatar_url}
                     alt={user?.user_metadata.full_name}
-                    width={45}
-                    height={45}
+                    width={43}
+                    height={43}
                     className="rounded-full"
                 />
             </Menu.Button>
@@ -39,12 +40,13 @@ export const SidebarUserInfo = (props: Props) => {
                                 className="flex items-center rounded-lg p-1 transition duration-200 ease-out hover:bg-blue-50 hover:text-blue-700 focus:outline-none w-full font-medium text-gray-900 text-sm"
                                 onClick={() => setIsOpen(true)}>
                                 <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white">
-                                    <img
+                                    <Image
                                         src="/image-user.svg"
                                         alt="Profile"
-                                        width={20}
-                                        height={20}
-                                        loading="eager"
+                                        loading="lazy"
+                                        placeholder="blur"
+                                        width={18}
+                                        height={18}
                                     />
                                 </div>
                                 <span>Profile</span>
@@ -55,12 +57,13 @@ export const SidebarUserInfo = (props: Props) => {
                                 className="flex items-center rounded-lg p-1 transition duration-200 ease-out hover:bg-red-200 hover:text-red-700 focus:outline-none w-full font-medium text-gray-900 text-sm"
                                 onClick={handleSignOut}>
                                 <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white">
-                                    <img
+                                    <Image
                                         src="/log-out-02.svg"
                                         alt="Profile"
-                                        width={20}
-                                        height={20}
-                                        loading="eager"
+                                        loading="lazy"
+                                        placeholder="blur"
+                                        width={18}
+                                        height={18}
                                     />
                                 </div>
                                 <span>Log out</span>

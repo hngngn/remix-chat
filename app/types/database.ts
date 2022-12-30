@@ -24,7 +24,6 @@ export type Room_participants = {
     profile_id: string /* primary key */ /* foreign key to profiles.id */
     room_id: string /* primary key */ /* foreign key to rooms.id */
     created_at: string
-    last_message?: string
     profiles?: Profiles
     rooms?: Rooms
 }

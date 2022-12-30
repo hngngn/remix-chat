@@ -17,7 +17,9 @@ export const ClickOutsideListener = <T extends HTMLElement>(props: {
 
         window.addEventListener("click", clickHandler)
 
-        return () => window.removeEventListener("click", clickHandler)
+        return () => {
+            window.removeEventListener("click", clickHandler)
+        }
     }, [])
 
     return <>{children(ref)}</>

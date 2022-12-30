@@ -1,11 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react"
 import type { User } from "@supabase/supabase-js"
 import { Fragment } from "react"
+import { Image } from "remix-image"
 
 type Props = {
     isOpen: boolean
     setIsOpen: (arg: boolean) => void
-    user: User
+    user: User | undefined
 }
 
 export const UserInfoModal = (props: Props) => {
@@ -43,36 +44,41 @@ export const UserInfoModal = (props: Props) => {
                                         Profile
                                     </Dialog.Title>
                                     <button
-                                        className="flex justify-center items-center bg-slate-100 p-1 rounded-2"
+                                        className="flex justify-center items-center bg-indigo-50 p-1 rounded-2"
                                         onClick={() => setIsOpen(false)}>
-                                        <img
+                                        <Image
                                             src="/x-close.svg"
                                             alt="Close"
+                                            loading="lazy"
+                                            placeholder="blur"
                                             width={20}
                                             height={20}
-                                            loading="eager"
                                         />
                                     </button>
                                 </div>
                                 <div className="mt-2 flex flex-col gap-4 items-center">
-                                    <img
-                                        src={user.user_metadata.avatar_url}
-                                        alt={user.user_metadata.full_name}
+                                    <Image
+                                        src={user?.user_metadata.avatar_url}
+                                        alt={user?.user_metadata.full_name}
                                         width={90}
                                         height={90}
+                                        loading="lazy"
+                                        placeholder="blur"
                                         className="rounded-full"
                                     />
                                     <table>
-                                        <tr>
-                                            <td className="pr-4 py-2 font-500">Username:</td>
-                                            <td className="text-slate-700">
-                                                {user.user_metadata.full_name}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="pr-4 py-2 font-500">Email:</td>
-                                            <td className="text-slate-700">{user.email}</td>
-                                        </tr>
+                                        <tbody>
+                                            <tr>
+                                                <td className="pr-4 py-2 font-500">Username:</td>
+                                                <td className="text-slate-700">
+                                                    {user?.user_metadata.full_name}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="pr-4 py-2 font-500">Email:</td>
+                                                <td className="text-slate-700">{user?.email}</td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </Dialog.Panel>

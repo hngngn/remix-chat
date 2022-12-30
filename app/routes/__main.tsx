@@ -1,8 +1,10 @@
-import { json, LoaderArgs } from "@remix-run/node"
-import { Outlet, useFetcher, useLoaderData, useNavigate } from "@remix-run/react"
-import { createBrowserClient, Session, SupabaseClient } from "@supabase/auth-helpers-remix"
+import type { LoaderArgs } from "@remix-run/node"
+import { json } from "@remix-run/node"
+import { Outlet, useFetcher, useLoaderData, useLocation, useNavigate } from "@remix-run/react"
+import type { Session, SupabaseClient } from "@supabase/auth-helpers-remix"
+import { createBrowserClient } from "@supabase/auth-helpers-remix"
 import { useEffect, useState } from "react"
-import { Database } from "~/types/supabase"
+import type { Database } from "~/types/supabase"
 import { createServerClient } from "~/utils"
 
 export type TypedSupabaseClient = SupabaseClient<Database>
@@ -39,6 +41,7 @@ const Supabase = () => {
     const { env, session } = useLoaderData<typeof loader>()
     const fetcher = useFetcher()
     const navigate = useNavigate()
+    const location = useLocation()
 
     const [supabase] = useState(() =>
         createBrowserClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
@@ -56,10 +59,14 @@ const Supabase = () => {
                     action: "/handle-auth",
                 })
             }
+            if (event === "SIGNED_IN")
+                navigate(location.pathname !== "/auth" ? location.pathname : "/")
             if (event === "SIGNED_OUT") navigate("/auth")
         })
 
-        return () => subscription.unsubscribe()
+        return () => {
+            subscription.unsubscribe()
+        }
     }, [serverAccessToken, supabase, fetcher])
 
     return (

@@ -51,19 +51,16 @@ export interface Database {
                     profile_id: string
                     room_id: string
                     created_at: string
-                    last_message: string | null
                 }
                 Insert: {
                     profile_id: string
                     room_id: string
                     created_at?: string
-                    last_message?: string | null
                 }
                 Update: {
                     profile_id?: string
                     room_id?: string
                     created_at?: string
-                    last_message?: string | null
                 }
             }
             rooms: {
@@ -88,6 +85,10 @@ export interface Database {
             create_new_room: {
                 Args: { other_user_id: string }
                 Returns: string
+            }
+            get_last_message: {
+                Args: { user_room_id: string }
+                Returns: { content: string }
             }
             is_room_participant: {
                 Args: { room_id: string }

@@ -1,15 +1,16 @@
-import { defineConfig, presetUno, transformerVariantGroup } from "unocss"
+import { defineConfig, presetUno, transformerDirectives, transformerVariantGroup } from "unocss"
 import { presetHeadlessUi } from "unocss-preset-primitives"
 import { presetScrollbar } from "unocss-preset-scrollbar"
 
 export default defineConfig({
     presets: [presetUno(), presetHeadlessUi(), presetScrollbar()],
-    transformers: [transformerVariantGroup()],
+    transformers: [transformerVariantGroup(), transformerDirectives()],
     shortcuts: {
         center: "flex justify-center items-center min-h-screen",
         "btn-icon": "font-600 h-[3.5rem] rounded-3 flex justify-center items-center gap-3",
         "menu-item":
             "flex w-full items-center gap-2 rounded-lg p-3 text-sm text-gray-700 hover:bg-slate-100 font-500",
+        input: "border rounded-xl p-[.7rem] w-full placeholder:text-gray-600 focus:outline-none transition-shadow duration-150 ease-in focus:ring focus:ring-slate-700 text-sm",
     },
     preflights: [
         {

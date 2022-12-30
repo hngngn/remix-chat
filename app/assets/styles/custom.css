@@ -1,0 +1,9 @@
+@keyframes blurIn {
+    0% {
+        filter: blur(15px);
+    }
+    100% {
+        filter: blur(0px);
+        background: transparent;
+    }
+}
