@@ -14,9 +14,9 @@ export const RoomHeader = (props: Props) => {
     return (
         <div className="sticky p-4 border-b">
             <div className="flex justify-between">
-                <div className="flex gap-4">
+                <div className="flex gap-4 items-center">
                     <button
-                        className="p-2 bg-slate-100 rounded-xl block md:hidden"
+                        className="p-2 h-fit bg-slate-100 rounded-xl block md:hidden"
                         onClick={() => navigate("/", { replace: true })}>
                         <Image
                             src="/chevron-left.svg"
@@ -26,6 +26,8 @@ export const RoomHeader = (props: Props) => {
                             options={{
                                 contentType: MimeType.WEBP,
                             }}
+                            width={18}
+                            height={18}
                         />
                     </button>
                     <div className="flex justify-center items-center gap-3">

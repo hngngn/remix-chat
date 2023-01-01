@@ -104,7 +104,7 @@ const Room = () => {
                         maxRows={4}
                     />
                     <button
-                        className="bg-slate-700 px-3 rounded-lg h-2.5rem self-end block md:hidden"
+                        className="bg-slate-700 p-3.5 rounded-xl self-end block md:hidden"
                         onClick={handleSendMessage}>
                         <Image
                             src="/navigation-pointer.svg"

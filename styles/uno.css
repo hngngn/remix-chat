@@ -55,9 +55,9 @@
 .\!h-\[2\.8rem\]{height:2.8rem !important;}
 .h-\.8rem{height:0.8rem;}
 .h-\[calc\(100\%-72px\*2-12px\)\]{height:calc(100% - 72px * 2 - 12px);}
-.h-10,
-.h-2\.5rem{height:2.5rem;}
+.h-10{height:2.5rem;}
 .h-8px{height:8px;}
+.h-fit{height:fit-content;}
 .h-full{height:100%;}
 .h1{height:0.25rem;}
 .max-w-\[12em\]{max-width:12em;}
@@ -137,11 +137,11 @@
 .p-1{padding:0.25rem;}
 .p-2{padding:0.5rem;}
 .p-3{padding:0.75rem;}
+.p-3\.5{padding:0.875rem;}
 .p-4{padding:1rem;}
 .p-6{padding:1.5rem;}
 .px,
 .px-4{padding-left:1rem;padding-right:1rem;}
-.px-3{padding-left:0.75rem;padding-right:0.75rem;}
 .px-4\.5{padding-left:1.125rem;padding-right:1.125rem;}
 .py-2{padding-top:0.5rem;padding-bottom:0.5rem;}
 .pb-2{padding-bottom:0.5rem;}
