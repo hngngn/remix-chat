@@ -1,16 +1,13 @@
 import { Link } from "@remix-run/react"
-import type { User } from "@supabase/supabase-js"
 import { Image, MimeType } from "remix-image"
 import { SidebarUserInfo } from "./user-info"
 
 type Props = {
-    user: User | undefined
     setIsOpen: (arg: boolean) => void
-    handleSignOut: () => void
 }
 
 export const SidebarLeft = (props: Props) => {
-    const { handleSignOut, setIsOpen, user } = props
+    const { setIsOpen } = props
 
     return (
         <div className="w-[5em] p-4 flex flex-col items-center justify-between border-r">
@@ -44,7 +41,7 @@ export const SidebarLeft = (props: Props) => {
                     />
                 </button>
             </div>
-            <SidebarUserInfo handleSignOut={handleSignOut} user={user} setIsOpen={setIsOpen} />
+            <SidebarUserInfo setIsOpen={setIsOpen} />
         </div>
     )
 }

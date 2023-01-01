@@ -1,6 +1,6 @@
 import type { LoaderArgs } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
-import { Outlet, useLocation, useNavigate, useOutletContext } from "@remix-run/react"
+import { Outlet, useLocation, useOutletContext } from "@remix-run/react"
 import { Sidebar } from "~/components"
 import { useIsOnline } from "~/hooks"
 import type { SupabaseContext } from "~/routes/__main"
@@ -19,18 +19,13 @@ export const loader = async ({ request }: LoaderArgs) => {
 
 const Home = () => {
     const { supabase, session, room_participants } = useOutletContext<SupabaseContext>()
-    const navigate = useNavigate()
-    const signOutHandle = () => {
-        supabase.auth.signOut()
-        navigate("/auth", { replace: true })
-    }
     const location = useLocation()
     useIsOnline(session?.user.id)
 
     return (
         <div className="flex h-full">
             <div className={`${location.pathname === "/" ? "block" : "hidden md:block"}`}>
-                <Sidebar user={session?.user} handleSignOut={signOutHandle} />
+                <Sidebar />
             </div>
             <main
                 className={`md:min-w-[calc(100vw-80px-320px)] w-screen ${

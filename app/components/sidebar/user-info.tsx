@@ -1,22 +1,28 @@
 import { Menu, Transition } from "@headlessui/react"
-import type { User } from "@supabase/supabase-js"
+import { useNavigate, useOutletContext } from "@remix-run/react"
 import { Fragment } from "react"
 import { Image, MimeType } from "remix-image"
+import type { SupabaseContext } from "~/routes/__main"
 
 type Props = {
-    user: User | undefined
     setIsOpen: (arg: boolean) => void
-    handleSignOut: () => void
 }
 
 export const SidebarUserInfo = (props: Props) => {
-    const { user, setIsOpen, handleSignOut } = props
+    const { setIsOpen } = props
+    const { supabase, session } = useOutletContext<SupabaseContext>()
+    const navigate = useNavigate()
+    const signOutHandle = () => {
+        supabase.auth.signOut()
+        navigate("/auth", { replace: true })
+    }
+
     return (
         <Menu as="div" className="relative">
             <Menu.Button className="focus:outline-none">
                 <Image
-                    src={user?.user_metadata.avatar_url}
-                    alt={user?.user_metadata.full_name}
+                    src={session?.user.user_metadata.avatar_url}
+                    alt={session?.user.user_metadata.full_name}
                     width={43}
                     height={43}
                     loading="eager"
@@ -63,7 +69,7 @@ export const SidebarUserInfo = (props: Props) => {
                         <Menu.Item as="div" className="bg-slate-50 p-2">
                             <button
                                 className="flex items-center rounded-lg p-1 transition duration-200 ease-out hover:bg-red-200 hover:text-red-700 focus:outline-none w-full font-medium text-gray-900 text-sm"
-                                onClick={handleSignOut}>
+                                onClick={signOutHandle}>
                                 <div className="flex h-10 w-10 shrink-0 items-center justify-center text-white">
                                     <Image
                                         src="/log-out-02.svg"

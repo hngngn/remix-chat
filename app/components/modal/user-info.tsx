@@ -1,16 +1,17 @@
 import { Dialog, Transition } from "@headlessui/react"
-import type { User } from "@supabase/supabase-js"
+import { useOutletContext } from "@remix-run/react"
 import { Fragment } from "react"
 import { Image, MimeType } from "remix-image"
+import type { SupabaseContext } from "~/routes/__main"
 
 type Props = {
     isOpen: boolean
     setIsOpen: (arg: boolean) => void
-    user: User | undefined
 }
 
 export const UserInfoModal = (props: Props) => {
-    const { isOpen, setIsOpen, user } = props
+    const { isOpen, setIsOpen } = props
+    const { session } = useOutletContext<SupabaseContext>()
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
@@ -61,8 +62,8 @@ export const UserInfoModal = (props: Props) => {
                                 </div>
                                 <div className="mt-2 flex flex-col gap-4 items-center">
                                     <Image
-                                        src={user?.user_metadata.avatar_url}
-                                        alt={user?.user_metadata.full_name}
+                                        src={session?.user.user_metadata.avatar_url}
+                                        alt={session?.user.user_metadata.full_name}
                                         width={90}
                                         height={90}
                                         loading="eager"
@@ -77,12 +78,14 @@ export const UserInfoModal = (props: Props) => {
                                             <tr>
                                                 <td className="pr-4 py-2 font-500">Username:</td>
                                                 <td className="text-slate-700">
-                                                    {user?.user_metadata.full_name}
+                                                    {session?.user.user_metadata.full_name}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td className="pr-4 py-2 font-500">Email:</td>
-                                                <td className="text-slate-700">{user?.email}</td>
+                                                <td className="text-slate-700">
+                                                    {session?.user.email}
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
