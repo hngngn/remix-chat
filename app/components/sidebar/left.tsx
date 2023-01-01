@@ -17,7 +17,7 @@ export const SidebarLeft = (props: Props) => {
             <div className="w-full flex flex-col gap-2">
                 <Link
                     to="/"
-                    className="btn-icon transition duration-200 ease-out hover:bg-blue-50 w-full !h-[2.8rem]">
+                    className="btn-icon transition duration-200 ease-out hover:bg-slate-100 w-full !h-[2.8rem]">
                     <Image
                         src="/home-line.svg"
                         alt="Home"
@@ -30,7 +30,7 @@ export const SidebarLeft = (props: Props) => {
                         height={22}
                     />
                 </Link>
-                <button className="btn-icon bg-blue-50 w-full !h-[2.8rem]">
+                <button className="btn-icon bg-slate-100 w-full !h-[2.8rem]">
                     <Image
                         src="/message-circle.svg"
                         alt="Message"

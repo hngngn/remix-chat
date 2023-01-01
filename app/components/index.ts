@@ -1,4 +1,7 @@
+export * from "./avatar"
 export * from "./click-outside"
+export * from "./indicator"
 export * from "./modal"
 export * from "./room"
 export * from "./sidebar"
+export * from "./skeleton"

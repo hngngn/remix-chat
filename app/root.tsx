@@ -6,6 +6,9 @@ import custom from "~/assets/styles/custom.css"
 import inter from "~/assets/styles/inter.css"
 import uno from "../styles/uno.css"
 
+import TimeAgo from "javascript-time-ago"
+import en from "javascript-time-ago/locale/en.json"
+
 export const meta: MetaFunction = () => ({
     charset: "utf-8",
     title: "RemixChat",
@@ -39,6 +42,8 @@ export const links: LinksFunction = () => [
         as: "style",
     },
 ]
+
+TimeAgo.addDefaultLocale(en)
 
 const App = () => {
     return (

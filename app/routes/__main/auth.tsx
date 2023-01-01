@@ -44,13 +44,13 @@ const Auth = () => {
             return await supabase.auth.signInWithOAuth({
                 provider: "github",
                 options: {
-                    redirectTo: env.PRODUCTION_URL || "http://192.168.1.105:3000",
+                    redirectTo: env.PRODUCTION_URL || "http://localhost:3000",
                 },
             })
         return await supabase.auth.signInWithOAuth({
             provider: "google",
             options: {
-                redirectTo: env.PRODUCTION_URL || "http://192.168.1.105:3000",
+                redirectTo: env.PRODUCTION_URL || "http://localhost:3000",
             },
         })
     }

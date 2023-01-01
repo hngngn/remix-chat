@@ -6,7 +6,7 @@ export default defineConfig({
     presets: [presetUno(), presetHeadlessUi(), presetScrollbar()],
     transformers: [transformerVariantGroup(), transformerDirectives()],
     shortcuts: {
-        center: "flex justify-center items-center min-h-screen",
+        center: "flex justify-center items-center h-full",
         "btn-icon": "font-600 h-[3.5rem] rounded-3 flex justify-center items-center gap-3",
         "menu-item":
             "flex w-full items-center gap-2 rounded-lg p-3 text-sm text-gray-700 hover:bg-slate-100 font-500",

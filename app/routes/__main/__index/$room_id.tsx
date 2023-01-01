@@ -1,23 +1,18 @@
 import { useOutletContext, useParams } from "@remix-run/react"
-import { useSetAtom } from "jotai"
+import { useAtom, useSetAtom } from "jotai"
 import type { KeyboardEvent } from "react"
 import { useEffect, useRef, useState } from "react"
 import ReactTextareaAutosize from "react-textarea-autosize"
-import { Image } from "remix-image"
+import { Image, MimeType } from "remix-image"
 import { RoomHeader } from "~/components"
 import type { SupabaseContext } from "~/routes/__main"
-import { useLastMessage } from "~/stores"
-import type { Messages, Room_participants } from "~/types/database"
+import { messagesAtom, useLastMessage } from "~/stores"
+import type { Messages } from "~/types/database"
 
 const Room = () => {
     const params = useParams()
-    const { room_participants, session, supabase } = useOutletContext<
-        SupabaseContext & {
-            room_participants: Room_participants[]
-            messages: Messages[]
-        }
-    >()
-    const [messages, setMessages] = useState<Messages[] | null>(null)
+    const { room_participants, session, supabase } = useOutletContext<SupabaseContext>()
+    const [messages, setMessages] = useAtom(messagesAtom)
     const fetchMessage = async () => {
         const { data: messages } = await supabase
             .from("messages")
@@ -44,8 +39,7 @@ const Room = () => {
                 async (payload) => {
                     if (messages !== null) setMessages([...messages, payload.new as Messages])
                     setLastMessage({
-                        message: payload.new.content,
-                        room_id: params.room_id,
+                        ...(payload.new as Messages),
                     })
                 }
             )
@@ -88,10 +82,10 @@ const Room = () => {
                             <p
                                 ref={chatRef}
                                 key={data.id}
-                                className={`w-fit rounded-t-xl whitespace-pre-line ${
+                                className={`w-fit max-w-max md:max-w-25rem rounded-t-xl whitespace-pre-line ${
                                     data.profile_id === session?.user.id
-                                        ? "p-3 bg-slate-600 text-white self-end rounded-l-2xl"
-                                        : "p-3 bg-blue-50 rounded-r-2xl"
+                                        ? "p-3 bg-slate-700 text-white self-end rounded-l-2xl"
+                                        : "p-3 bg-slate-100 rounded-r-2xl"
                                 }`}>
                                 {data.content}
                             </p>
@@ -105,20 +99,23 @@ const Room = () => {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         onKeyDown={handleKeyDown}
-                        className="input bg-blue-50 border-none focus:ring-blue-500 px-4.5 resize-none md:scrollbar md:scrollbar-rounded md:scroll-smooth overflow-hidden md:hover:overflow-auto"
+                        className="input bg-slate-50 border border-slate-300 px-4.5 focus:bg-transparent resize-none md:scrollbar md:scrollbar-rounded md:scroll-smooth overflow-hidden md:hover:overflow-auto"
                         rows={1}
                         maxRows={4}
                     />
                     <button
-                        className="bg-blue-500 px-3 rounded-lg h-2.5rem self-end block md:hidden"
+                        className="bg-slate-700 px-3 rounded-lg h-2.5rem self-end block md:hidden"
                         onClick={handleSendMessage}>
                         <Image
                             src="/navigation-pointer.svg"
                             alt="Send message"
                             height={18}
                             width={18}
-                            loading="lazy"
                             loading="eager"
+                            loaderUrl="/api/image"
+                            options={{
+                                contentType: MimeType.WEBP,
+                            }}
                         />
                     </button>
                 </div>

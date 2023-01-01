@@ -3,22 +3,16 @@ import type { RefObject } from "react"
 import { useEffect, useState } from "react"
 import { Image, MimeType } from "remix-image"
 import { useDebounce } from "~/hooks"
-import type { TypedSupabaseClient } from "~/routes/__main"
-import type { Profiles, Room_participants } from "~/types/database"
+import type { SupabaseContext } from "~/routes/__main"
+import type { Profiles } from "~/types/database"
 import { ClickOutsideListener } from "../click-outside"
 import { SearchUserList } from "./search-userlist"
 import { SidebarMessage } from "./sidebar-message"
 
-type Props = {
-    room_participants: Room_participants[]
-}
-
-export const SidebarRight = (props: Props) => {
-    const { room_participants } = props
-
+export const SidebarRight = () => {
     const [search, setSearch] = useState("")
     const debouncedValue = useDebounce<string>(search)
-    const { supabase } = useOutletContext<{ supabase: TypedSupabaseClient }>()
+    const { supabase, room_participants } = useOutletContext<SupabaseContext>()
     const [searchData, setSearchData] = useState<Profiles[] | null>(null)
     const [isFocused, setIsFocused] = useState(false)
     const searchHandle = async () => {

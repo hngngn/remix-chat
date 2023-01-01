@@ -4,6 +4,8 @@ import { Outlet, useFetcher, useLoaderData, useLocation, useNavigate } from "@re
 import type { Session, SupabaseClient } from "@supabase/auth-helpers-remix"
 import { createBrowserClient } from "@supabase/auth-helpers-remix"
 import { useEffect, useState } from "react"
+import { useFullViewMobile } from "~/hooks"
+import type { Room_participants } from "~/types/database"
 import type { Database } from "~/types/supabase"
 import { createServerClient } from "~/utils"
 
@@ -13,6 +15,7 @@ export type MaybeSession = Session | null
 export type SupabaseContext = {
     supabase: TypedSupabaseClient
     session: MaybeSession
+    room_participants: Room_participants[]
 }
 
 export const loader = async ({ request }: LoaderArgs) => {
@@ -25,11 +28,16 @@ export const loader = async ({ request }: LoaderArgs) => {
     const {
         data: { session },
     } = await supabase.auth.getSession()
+    const { data: room_participants } = await supabase
+        .from("room_participants")
+        .select("*, profiles(*)")
+        .neq("profile_id", session?.user.id)
 
     return json(
         {
             env,
             session,
+            room_participants: room_participants as Room_participants[],
         },
         {
             headers: response.headers,
@@ -38,7 +46,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 }
 
 const Supabase = () => {
-    const { env, session } = useLoaderData<typeof loader>()
+    const { env, session, room_participants } = useLoaderData<typeof loader>()
     const fetcher = useFetcher()
     const navigate = useNavigate()
     const location = useLocation()
@@ -68,11 +76,15 @@ const Supabase = () => {
             subscription.unsubscribe()
         }
     }, [serverAccessToken, supabase, fetcher])
+    const height = useFullViewMobile()
 
     return (
-        <>
-            <Outlet context={{ supabase, session }} />
-        </>
+        <div
+            style={{
+                height: height ? `${height}px` : "100vh",
+            }}>
+            <Outlet context={{ supabase, session, room_participants }} />
+        </div>
     )
 }
 
